@@ -4,8 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using CatalogServiceAPI.Models;
-using CatalogServiceAPI.Service;
 using System;
+using CatalogAPI.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 

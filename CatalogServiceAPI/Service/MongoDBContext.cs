@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 
 
-namespace EnvironmentAPI.Service
+namespace CatalogAPI.Service
 {
     public class MongoDBContext
     {

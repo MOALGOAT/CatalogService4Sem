@@ -1,57 +1,58 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging; // Tilføj denne linje
+using Microsoft.Extensions.Logging;
 using CatalogServiceAPI.Models;
+using EnvironmentAPI.Models;
 
-namespace EnvironmentAPI.Controllers
+namespace CatalogServiceAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public class CatalogController : ControllerBase
     {
-        private readonly IUserInterface _userService;
-        private readonly ILogger<UserController> _logger; // Tilføjet ILogger
+        private readonly ICatalogInterface _catalogService;
+        private readonly ILogger<CatalogController> _logger;
 
-        public UserController(IUserInterface userService, ILogger<UserController> logger) // Ændret her for at inkludere ILogger
+        public CatalogController(ICatalogInterface catalogService, ILogger<CatalogController> logger)
         {
-            _userService = userService;
-            _logger = logger; // Tilføjet her for at gemme loggeren
+            _catalogService = catalogService;
+            _logger = logger;
         }
 
-        [HttpGet("{bruger_id}")]
-        public async Task<ActionResult<User>> GetUser(Guid bruger_id)
+        [HttpGet("{catalog_id}")]
+        public async Task<ActionResult<Catalog>> GetCatalog(Guid catalogID)
         {
-            var user = await _userService.GetUser(bruger_id);
-            if (user == null)
+            var catalog = await _catalogService.GetCatalog(catalogID);
+            if (catalog == null)
             {
                 return NotFound();
             }
-            return user;
+            return catalog;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUserList()
+        public async Task<ActionResult<IEnumerable<Catalog>>> GetCatalogList()
         {
-            var userList = await _userService.GetUserList();
-            if (userList == null) { throw new ApplicationException("listen er null"); };
-            return Ok(userList);
+            var catalogList = await _catalogService.GetCatalogList();
+            if (catalogList == null) { throw new ApplicationException("The list is null"); };
+            return Ok(catalogList);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> AddUser(User user)
+        public async Task<ActionResult<Guid>> AddCatalog(Catalog catalog)
         {
-            var userId = await _userService.AddUser(user);
-            return CreatedAtAction(nameof(GetUser), new { user_id = userId }, userId);
+            var catalogID = await _catalogService.AddCatalog(catalog);
+            return CreatedAtAction(nameof(GetCatalog), new { catalog_id = catalogID }, catalogID);
         }
 
-        [HttpPut("{user_id}")]
-        public async Task<IActionResult> UpdateUser(Guid _id, User user)
+        [HttpPut("{catalog_id}")]
+        public async Task<IActionResult> UpdateCatalog(Guid id, Catalog catalog)
         {
-            if (_id != user._id)
+            if (id != catalog.CatalogID)
             {
                 return BadRequest();
             }
 
-            var result = await _userService.UpdateUser(user);
+            var result = await _catalogService.UpdateCatalog(catalog);
             if (result == 0)
             {
                 return NotFound();
@@ -60,10 +61,10 @@ namespace EnvironmentAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{user_id}")]
-        public async Task<IActionResult> DeleteUser(Guid user_id)
+        [HttpDelete("{catalog_id}")]
+        public async Task<IActionResult> DeleteCatalog(Guid catalog_id)
         {
-            var result = await _userService.DeleteUser(user_id);
+            var result = await _catalogService.DeleteCatalog(catalog_id);
             if (result == 0)
             {
                 return NotFound();
