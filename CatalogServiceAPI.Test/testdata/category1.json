@@ -1,0 +1,26 @@
+[
+    {
+        "Catalogid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "ItemID": "Item1",
+        "Title": "Title1",
+        "Description": "Description1",
+        "Category": "Category1",
+        "Minimumprice": "100",
+        "status": "Available",
+        "buyer": "Buyer1",
+        "seller": "Seller1",
+        "logistic": "Logistic1"
+    },
+    {
+        "Catalogid": "3fa85f64-5717-4562-b3fc-2c963f66afa7",
+        "ItemID": "Item2",
+        "Title": "Title2",
+        "Description": "Description2",
+        "Category": "Category2",
+        "Minimumprice": "200",
+        "status": "Sold",
+        "buyer": "Buyer2",
+        "seller": "Seller2",
+        "logistic": "Logistic2"
+    }
+]
