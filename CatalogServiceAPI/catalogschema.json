@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "type": "string",
+      "description": "Unique identifier for the user in MongoDB."
+    },
+    "ItemID": {
+      "type": "string",
+      "description": "Identifier for the user's item in MongoDB."
+    },
+    "Title": {
+      "type": "string",
+      "description": "Title of the user's item in MongoDB."
+    },
+    "Description": {
+      "type": "string",
+      "description": "Description of the user's item in MongoDB."
+    },
+    "Category": {
+      "type": "string",
+      "description": "Category of the user's item in MongoDB."
+    },
+    "Minimumprice": {
+      "type": "string",
+      "description": "Minimum price of the user's item in MongoDB."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the user's item in MongoDB."
+    },
+    "buyer": {
+      "type": "string",
+      "description": "Buyer of the user's item in MongoDB."
+    },
+    "seller": {
+      "type": "string",
+      "description": "Seller of the user's item in MongoDB."
+    },
+    "logistic": {
+      "type": "string",
+      "description": "Logistics of the user's item in MongoDB."
+    }
+  },
+  "required": ["bruger_id", "_id", "ItemID", "Title", "Description", "Category", "Minimumprice", "status", "buyer", "seller", "logistic"]
+}
