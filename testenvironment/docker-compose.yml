@@ -1,0 +1,50 @@
+version: '3.8'
+
+networks:
+  auctionnetwork:
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    hostname: mongodb
+    ports:
+      - 27019:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+    volumes:
+      - mongodb_data_container:/data/db
+    networks:
+      - auctionnetwork
+
+  userservice:
+    image: rasmusdd/userservice2-image:1.0.0
+    container_name: userservice
+    hostname: userservice
+    ports:
+      - 80:8080
+    depends_on:
+      - mongodb
+    environment:
+      - ConnectionString=mongodb://admin:1234@mongodb:27017
+      - DatabaseName=4SemProj
+      - collectionName=Bruger
+    networks:
+      - auctionnetwork
+
+  catalogservice:
+    image: catalogserviceapi-image:latest
+    container_name: catalogservice
+    hostname: catalogservice
+    ports:
+      - 81:8080 # Assuming your Catalog API listens on port 8080 internally
+    environment:
+      - ConnectionString=mongodb://admin:1234@mongodb:27017
+      - DatabaseName=4SemProj
+      - collectionName=Katalog
+    networks:
+      - auctionnetwork
+
+volumes:
+  mongodb_data_container:

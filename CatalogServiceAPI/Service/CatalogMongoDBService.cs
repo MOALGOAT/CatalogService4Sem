@@ -6,11 +6,11 @@ namespace CatalogServiceAPI.Models
 {
     public interface ICatalogInterface
     {
-        Task<Catalog?> GetCatalog(Guid catalogID);
+        Task<Catalog?> GetCatalog(Guid _id);
         Task<IEnumerable<Catalog>?> GetCatalogList();
         Task<Guid> AddCatalog(Catalog catalog);
         Task<long> UpdateCatalog(Catalog catalog);
-        Task<long> DeleteCatalog(Guid catalogID);
+        Task<long> DeleteCatalog(Guid _id);
     }
 
     public class CatalogMongoDBService : ICatalogInterface
@@ -31,9 +31,9 @@ namespace CatalogServiceAPI.Models
             _logger.LogInformation($"Collection name: {collectionName}");
         }
 
-        public async Task<Catalog?> GetCatalog(Guid catalogID)
+        public async Task<Catalog?> GetCatalog(Guid _id)
         {
-            var filter = Builders<Catalog>.Filter.Eq(x => x.CatalogID, catalogID);
+            var filter = Builders<Catalog>.Filter.Eq(x => x._id, _id);
             return await _catalogCollection.Find(filter).FirstOrDefaultAsync();
         }
 
@@ -44,21 +44,21 @@ namespace CatalogServiceAPI.Models
 
         public async Task<Guid> AddCatalog(Catalog catalog)
         {
-            catalog.CatalogID = Guid.NewGuid();
+            catalog._id = Guid.NewGuid();
             await _catalogCollection.InsertOneAsync(catalog);
-            return catalog.CatalogID;
+            return catalog._id;
         }
 
         public async Task<long> UpdateCatalog(Catalog catalog)
         {
-            var filter = Builders<Catalog>.Filter.Eq(x => x.CatalogID, catalog.CatalogID);
+            var filter = Builders<Catalog>.Filter.Eq(x => x._id, catalog._id);
             var result = await _catalogCollection.ReplaceOneAsync(filter, catalog);
             return result.ModifiedCount;
         }
 
-        public async Task<long> DeleteCatalog(Guid catalogID)
+        public async Task<long> DeleteCatalog(Guid _id)
         {
-            var filter = Builders<Catalog>.Filter.Eq(x => x.CatalogID, catalogID);
+            var filter = Builders<Catalog>.Filter.Eq(x => x._id, _id);
             var result = await _catalogCollection.DeleteOneAsync(filter);
             return result.DeletedCount;
         }

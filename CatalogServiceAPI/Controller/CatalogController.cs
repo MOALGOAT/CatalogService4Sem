@@ -18,10 +18,10 @@ namespace CatalogServiceAPI.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{catalog_id}")]
-        public async Task<ActionResult<Catalog>> GetCatalog(Guid catalogID)
+        [HttpGet("{_id}")]
+        public async Task<ActionResult<Catalog>> GetCatalog(Guid _id)
         {
-            var catalog = await _catalogService.GetCatalog(catalogID);
+            var catalog = await _catalogService.GetCatalog(_id);
             if (catalog == null)
             {
                 return NotFound();
@@ -40,14 +40,14 @@ namespace CatalogServiceAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Guid>> AddCatalog(Catalog catalog)
         {
-            var catalogID = await _catalogService.AddCatalog(catalog);
-            return CreatedAtAction(nameof(GetCatalog), new { catalog_id = catalogID }, catalogID);
+            var _id = await _catalogService.AddCatalog(catalog);
+            return CreatedAtAction(nameof(GetCatalog), new { catalog_id = _id }, _id);
         }
 
-        [HttpPut("{catalog_id}")]
+        [HttpPut("{_id}")]
         public async Task<IActionResult> UpdateCatalog(Guid id, Catalog catalog)
         {
-            if (id != catalog.CatalogID)
+            if (id != catalog._id)
             {
                 return BadRequest();
             }
@@ -61,10 +61,10 @@ namespace CatalogServiceAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{catalog_id}")]
-        public async Task<IActionResult> DeleteCatalog(Guid catalog_id)
+        [HttpDelete("{_id}")]
+        public async Task<IActionResult> DeleteCatalog(Guid _id)
         {
-            var result = await _catalogService.DeleteCatalog(catalog_id);
+            var result = await _catalogService.DeleteCatalog(_id);
             if (result == 0)
             {
                 return NotFound();

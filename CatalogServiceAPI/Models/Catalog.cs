@@ -5,7 +5,7 @@ namespace EnvironmentAPI.Models
     public class Catalog {
 
         [BsonId]
-        public Guid CatalogID { get; set; }
+        public Guid _id { get; set; }
         public string ItemID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
