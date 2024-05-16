@@ -1,8 +1,5 @@
 version: '3.8'
 
-networks:
-  auctionnetwork:
-
 services:
   mongodb:
     image: mongo:latest
@@ -19,7 +16,7 @@ services:
       - auctionnetwork
 
   userservice:
-    image: rasmusdd/userservice2-image:1.0.0
+    image: rasmusdd/userservice3-image:1.0.0
     container_name: userservice
     hostname: userservice
     ports:
@@ -34,7 +31,7 @@ services:
       - auctionnetwork
 
   catalogservice:
-    image: catalogserviceapi-image:latest
+    image: furk0402/catalogservice5-image:1.0.0
     container_name: catalogservice
     hostname: catalogservice
     ports:
@@ -46,5 +43,25 @@ services:
     networks:
       - auctionnetwork
 
+  loki:
+    image: grafana/loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - auctionnetwork
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - auctionnetwork
+
+networks:
+  auctionnetwork:
+    driver: bridge
+    name: auctionnetwork
+  
 volumes:
   mongodb_data_container:
