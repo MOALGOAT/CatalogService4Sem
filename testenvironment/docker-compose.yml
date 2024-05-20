@@ -50,6 +50,8 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - auctionnetwork
+    volumes:
+      - loki_data:/etc/loki
 
   grafana:
     image: grafana/grafana:latest
@@ -57,6 +59,8 @@ services:
       - "3000:3000"
     networks:
       - auctionnetwork
+    volumes:
+      - grafana_data:/var/lib/grafana
 
 networks:
   auctionnetwork:
@@ -65,3 +69,5 @@ networks:
   
 volumes:
   mongodb_data_container:
+  loki_data:
+  grafana_data:
