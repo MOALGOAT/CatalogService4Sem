@@ -28,10 +28,10 @@ jobs:
       env: 
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
       run: |
-        docker build . -f CatalogServiceAPI/Dockerfile -t ${DOCKER_USER}/catalogservicegit-image:1.0.0
+        docker build . -f CatalogServiceAPI/Dockerfile -t ${DOCKER_USER}/catalogservicegit-image:latest
 
     - name: Push Docker image to Docker Hub
       env: 
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
       run: |
-        docker push ${DOCKER_USER}/catalogservicegit-image:1.0.0
+        docker push ${DOCKER_USER}/catalogservicegit-image:latest
