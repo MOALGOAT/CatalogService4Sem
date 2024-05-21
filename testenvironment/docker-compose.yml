@@ -16,7 +16,7 @@ services:
       - auctionnetwork
 
   userservice:
-    image: jakobhaulund/bruger-service-image:1.0.0
+    image: jakobhaulund/bruger-service-image:latest
     container_name: userservice
     hostname: userservice
     ports:
@@ -31,7 +31,7 @@ services:
       - auctionnetwork
 
   catalogservice:
-    image: rasmusdd/catalogservicegit-image:1.0.0
+    image: rasmusdd/catalogservicegit-image:latest
     container_name: catalogservice
     hostname: catalogservice
     ports:
