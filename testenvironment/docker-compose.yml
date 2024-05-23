@@ -1,41 +1,12 @@
 version: '3.8'
 
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    hostname: mongodb
-    ports:
-      - 27019:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: 1234
-    volumes:
-      - mongodb_data_container:/data/db
-    networks:
-      - auctionnetwork
-
-  userservice:
-    image: jakobhaulund/bruger-service-image:latest
-    container_name: userservice
-    hostname: userservice
-    ports:
-      - 80:8080
-    depends_on:
-      - mongodb
-    environment:
-      - ConnectionString=mongodb://admin:1234@mongodb:27017
-      - DatabaseName=4SemProj
-      - collectionName=Bruger
-    networks:
-      - auctionnetwork
-
   catalogservice:
     image: rasmusdd/catalogservicegit-image:latest
     container_name: catalogservice
     hostname: catalogservice
     ports:
-      - 81:8080 # Assuming your Catalog API listens on port 8080 internally
+      - 81:8080
     environment:
       - ConnectionString=mongodb://admin:1234@mongodb:27017
       - DatabaseName=4SemProj
@@ -43,31 +14,7 @@ services:
     networks:
       - auctionnetwork
 
-  loki:
-    image: grafana/loki
-    ports:
-      - "3100:3100"
-    command: -config.file=/etc/loki/local-config.yaml
-    networks:
-      - auctionnetwork
-    volumes:
-      - loki_data:/etc/loki
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
-    networks:
-      - auctionnetwork
-    volumes:
-      - grafana_data:/var/lib/grafana
-
 networks:
   auctionnetwork:
-    driver: bridge
     name: auctionnetwork
-  
-volumes:
-  mongodb_data_container:
-  loki_data:
-  grafana_data:
+    external: true
