@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CatalogServiceAPI.Controllers
 {
@@ -44,6 +45,7 @@ namespace CatalogServiceAPI.Controllers
         }
 
         [HttpGet("{_id}")]
+        [Authorize(Roles = "2")]
         public async Task<ActionResult<Catalog>> GetCatalog(Guid _id)
         {
             _logger.LogInformation($"Attempting to retrieve catalog with ID: {_id}");
@@ -60,6 +62,7 @@ namespace CatalogServiceAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "2")]
         public async Task<ActionResult<IEnumerable<Catalog>>> GetCatalogList()
         {
             _logger.LogInformation("Attempting to retrieve catalog list");
@@ -76,6 +79,7 @@ namespace CatalogServiceAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "1,2")]
         public async Task<ActionResult<Guid>> AddCatalog(Catalog catalog)
         {
             _logger.LogInformation("Attempting to add catalog");
@@ -87,6 +91,7 @@ namespace CatalogServiceAPI.Controllers
         }
 
         [HttpPut("{_id}")]
+        [Authorize(Roles = "2")]
         public async Task<IActionResult> UpdateCatalog(Guid _id, Catalog catalog)
         {
             _logger.LogInformation($"Attempting to update catalog with ID: {_id}");
@@ -109,6 +114,7 @@ namespace CatalogServiceAPI.Controllers
         }
 
         [HttpDelete("{_id}")]
+        [Authorize(Roles = "2")]
         public async Task<IActionResult> DeleteCatalog(Guid _id)
         {
             _logger.LogInformation($"Attempting to delete catalog with ID: {_id}");
