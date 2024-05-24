@@ -32,9 +32,21 @@ try
 
     var vaultService = new VaultService(configuration);
 
+
     string mySecret = await vaultService.GetSecretAsync("secrets", "SecretKey");
     string myIssuer = await vaultService.GetSecretAsync("secrets", "IssuerKey");
-
+    string myConnectionString = await vaultService.GetSecretAsync("secrets", "MongoConnectionString");
+    
+    string connectionString = myConnectionString;
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        logger.Error("ConnectionString not found in environment vaariables");
+        throw new Exception("ConnectionString not found in environment variables");
+    }
+    else
+    {
+        logger.Info("ConnectionString: {0}", connectionString);
+    }
     // Add services to the container.
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
