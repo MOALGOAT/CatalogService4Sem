@@ -11,7 +11,7 @@ namespace CatalogAPI.Service
 
         public MongoDBContext(ILogger<MongoDBContext> iLogger, IConfiguration configuration)
             {
-                var connectionString = configuration["ConnectionString"];
+                var connectionString = configuration["MongoConnectionString"];
                 var databaseName = configuration["DatabaseName"]; 
                 
                 iLogger.LogInformation($"Connection string: {connectionString}");
