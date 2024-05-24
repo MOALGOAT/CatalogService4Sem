@@ -14,7 +14,7 @@ namespace CatalogServiceAPI
     {
         private readonly IVaultClient _vaultClient;
 
-        public VaultService(IConfiguration _config) 
+        public VaultService(IConfiguration _config)
         {
             var EndPoint = _config["vaultConnectionString"];
             var httpClientHandler = new HttpClientHandler();
@@ -34,8 +34,36 @@ namespace CatalogServiceAPI
                     BaseAddress = new Uri(EndPoint)
                 }
             };
-            
+
             _vaultClient = new VaultClient(vaultClientSettings);
+        }
+
+        public async Task<string> GetConnectionStringAsync(string path, string key)
+        {
+            try
+            {
+                var secret = await _vaultClient.V1.Secrets.KeyValue.V2.ReadSecretAsync(path: path, mountPoint: "secret");
+
+                // Kontroller om secret blev fundet
+                if (secret != null && secret.Data != null && secret.Data.Data != null && secret.Data.Data.ContainsKey(key))
+                {
+                    return secret.Data.Data[key].ToString();
+                }
+                else
+                {
+                    throw new Exception($"Secret med nøglen '{key}' blev ikke fundet under stien '{path}'.");
+                }
+            }
+            catch (VaultApiException ex)
+            {
+                // Håndter fejl fra Vault API
+                throw new Exception($"Fejl ved hentning af secret fra Vault: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Generel fejlhåndtering
+                throw new Exception($"Der opstod en uventet fejl: {ex.Message}");
+            }
         }
 
         public async Task<string> GetSecretAsync(string path, string key)
