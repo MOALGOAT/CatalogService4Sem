@@ -128,7 +128,7 @@ namespace CatalogServiceAPI.Controllers
             }
 
             _logger.LogInformation($"Catalog with ID {_id} deleted successfully");
-            return Ok();
+            return Ok($"Catalog with ID {_id} deleted successfully");
         }
     }
 }
