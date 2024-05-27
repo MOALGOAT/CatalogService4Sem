@@ -110,7 +110,7 @@ namespace CatalogServiceAPI.Controllers
             }
 
             _logger.LogInformation($"Catalog with ID {_id} updated successfully");
-            return NoContent();
+            return Ok($"Catalog with id {_id} updated successfully");
         }
 
         [HttpDelete("{_id}")]

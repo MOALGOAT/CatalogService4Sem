@@ -38,8 +38,6 @@ try
     string connectionString = await vaultService.GetConnectionStringAsync("secrets", "MongoConnectionString");
     configuration["MongoConnectionString"] = connectionString;
 
-    Console.WriteLine("ka du få fat i dne her connectionstring hva?" + connectionString);
-
     if (string.IsNullOrEmpty(connectionString))
     {
         logger.Error("ConnectionString not found in environment vaariables");
