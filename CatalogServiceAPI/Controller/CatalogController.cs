@@ -87,7 +87,8 @@ namespace CatalogServiceAPI.Controllers
             var _id = await _catalogService.AddCatalog(catalog);
 
             _logger.LogInformation($"Catalog added with ID: {_id}");
-            return CreatedAtAction(nameof(GetCatalog), new { _id = _id }, _id);
+
+            return Ok($"Catalog added with ID: {_id}");
         }
 
         [HttpPut("{_id}")]
