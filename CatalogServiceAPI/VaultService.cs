@@ -38,7 +38,7 @@ namespace CatalogServiceAPI
             _vaultClient = new VaultClient(vaultClientSettings);
         }
 
-        public async Task<string> GetConnectionStringAsync(string path, string key)
+        public async Task<string?> GetConnectionStringAsync(string path, string key)
         {
             try
             {
@@ -61,12 +61,11 @@ namespace CatalogServiceAPI
             }
             catch (Exception ex)
             {
-                // Generel fejlhåndtering
-                throw new Exception($"Unexpected error occured: {ex.Message}");
+                return null + "fejl ved hentning af conn string";
             }
         }
 
-        public async Task<string> GetSecretAsync(string path, string key)
+        public async Task<string?> GetSecretAsync(string path, string key)
         {
             try
             {
@@ -90,8 +89,7 @@ namespace CatalogServiceAPI
             }
             catch (Exception ex)
             {
-                // Generel fejlhåndtering
-                throw new Exception($"Unexpected error occured: {ex.Message}");
+                return null + "fejl ved hentning af secret";
             }
         }
 
