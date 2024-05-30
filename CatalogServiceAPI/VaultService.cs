@@ -89,7 +89,8 @@ namespace CatalogServiceAPI
             }
             catch (Exception ex)
             {
-                return null + "fejl ved hentning af secret";
+                Console.WriteLine("Error retreiving secret from Vault: {0}", ex.Message);
+                return null;
             }
         }
 
